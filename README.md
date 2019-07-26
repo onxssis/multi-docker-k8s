@@ -1,3 +1,3 @@
 # docker-multi
 
-## multiple container docker deployment
+## learning multiple container docker and k8s deployment
