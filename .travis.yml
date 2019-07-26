@@ -6,20 +6,20 @@ env:
     - SHA=$(git rev-parse HEAD)
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-  - openssl aes-256-cbc -K $encrypted_331466284a58_key -iv $encrypted_331466284a58_iv -in service-account.json.enc -out service-account.json -d
-  - curl https://sdk.cloud.google.com | bash > /dev/null;
-  - source $HOME/google-cloud-sdk/path.bash.inc
-  - gcloud components update kubectl
-  - gcloud auth activate-service-account --key-file service-account.json
-  - gcloud container clusters get-credentials standard-cluster-1 --zone europe-west2-a --project multi-k8s-247912
+  # - openssl aes-256-cbc -K $encrypted_331466284a58_key -iv $encrypted_331466284a58_iv -in service-account.json.enc -out service-account.json -d
+  # - curl https://sdk.cloud.google.com | bash > /dev/null;
+  # - source $HOME/google-cloud-sdk/path.bash.inc
+  # - gcloud components update kubectl
+  # - gcloud auth activate-service-account --key-file service-account.json
+  # - gcloud container clusters get-credentials standard-cluster-1 --zone europe-west2-a --project multi-k8s-247912
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t onxssis/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true onxssis/react-test npm test
 
-deploy:
-  provider: script
-  script: bash ./deploy.sh
-  on:
-    branch: master
+# deploy:
+#   provider: script
+#   script: bash ./deploy.sh
+#   on:
+#     branch: master
